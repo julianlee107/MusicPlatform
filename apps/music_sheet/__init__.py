@@ -1,0 +1,1 @@
+default_app_config = 'music_sheet.apps.MusicSheetConfig'

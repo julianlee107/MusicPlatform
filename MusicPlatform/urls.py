@@ -15,11 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 
-from users.views import get_blank
+from users.views import get_index,profile,LogInView,RegisterView,logout_view
 from django.conf.urls import url
 import xadmin
+xadmin.autodiscover()
+
 
 urlpatterns = [
     url('xadmin/', xadmin.site.urls),
-    url('blank/',get_blank)
+    # url('admin/', admin.site.urls),
+    url('index/$',get_index),
+    url('register/$',RegisterView.as_view(),name='注册'),
+    url('profile/$',profile),
+    url('login/$',LogInView.as_view(),name='登录'),
+    url('logout/$',logout_view),
+    url('',get_index)
 ]
