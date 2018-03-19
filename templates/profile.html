@@ -26,9 +26,9 @@
         <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html">
           <i class="icon-list"></i>
         </a>
-        <a href="index.html" class="navbar-brand text-lt">
+        <a href="/index/" class="navbar-brand text-lt">
           <i class="icon-earphones"></i>
-          <img src="images/logo.png" alt="." class="hide">
+          <img src="/static/images/logo.png" alt="." class="hide">
           <span class="hidden-nav-xs m-l-sm">Music</span>
         </a>
         <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user">
@@ -64,10 +64,11 @@
                 <div class="panel-heading b-light bg-light">
                   <strong>You have <span class="count">2</span> notifications</strong>
                 </div>
+                    <!--消息列表-->
                 <div class="list-group list-group-alt">
                   <a href="#" class="media list-group-item">
                     <span class="pull-left thumb-sm">
-                      <img src="images/a0.png" alt="..." class="img-circle">
+                      <img src="/static/images/a0.png" alt="..." class="img-circle">
                     </span>
                     <span class="media-body block m-b-none">
                       Use awesome animate.css<br>
@@ -91,9 +92,9 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle bg clear" data-toggle="dropdown">
               <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
-                <img src="images/a0.png" alt="...">
+                <img src="/static/images/a0.png" alt="...">
               </span>
-              John.Smith <b class="caret"></b>
+              {{ username }} <b class="caret"></b>
             </a>
             <ul class="dropdown-menu animated fadeInRight">            
               <li>
@@ -109,12 +110,10 @@
                   Notifications
                 </a>
               </li>
-              <li>
-                <a href="docs.html">Help</a>
-              </li>
               <li class="divider"></li>
               <li>
-                <a href="modal.lockme.html" data-toggle="ajaxModal" >Logout</a>
+                <!--<a href="/logout/" data-toggle="ajaxModal" >Logout</a>-->
+                  <a href="/logout/">Logout</a>
               </li>
             </ul>
           </li>
@@ -138,19 +137,19 @@
                       Discover
                     </li>
                     <li>
-                      <a href="index.html">
+                      <a href="/index/">
                         <i class="icon-disc icon text-success"></i>
                         <span class="font-bold">What's new</span>
                       </a>
                     </li>
                     <li>
-                      <a href="genres.html">
+                      <a href="/genres/">
                         <i class="icon-music-tone-alt icon text-info"></i>
                         <span class="font-bold">Genres</span>
                       </a>
                     </li>
                     <li>
-                      <a href="listen.html">
+                      <a href="/listen/">
                         <i class="icon-list icon  text-info-dker"></i>
                         <span class="font-bold">Listen</span>
                       </a>
@@ -188,15 +187,14 @@
                   <div class="dropdown dropup wrapper-sm clearfix">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                       <span class="thumb-sm avatar pull-left m-l-xs">                        
-                        <img src="images/a3.png" class="dker" alt="...">
+                        <img src="/static/images/a3.png" class="dker" alt="...">
                         <i class="on b-black"></i>
                       </span>
                       <span class="hidden-nav-xs clear">
                         <span class="block m-l">
-                          <strong class="font-bold text-lt">John.Smith</strong> 
-                          <b class="caret"></b>
+                          <strong class="font-bold text-lt">{{ username }}</strong>
                         </span>
-                        <span class="text-muted text-xs block m-l">Art Director</span>
+                       <span class="text-muted text-xs block m-l">{{ user.email }}</span>
                       </span>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight aside text-left">                      
@@ -218,7 +216,8 @@
                       </li>
                       <li class="divider"></li>
                       <li>
-                        <a href="modal.lockme.html" data-toggle="ajaxModal" >Logout</a>
+                        <!--<a href="modal.lockme.html" data-toggle="ajaxModal" >Logout</a>-->
+                         <a href="/logout/">Logout</a>
                       </li>
                     </ul>
                   </div>
@@ -229,6 +228,7 @@
         <section id="content">
           <section class="vbox">
             <section class="scrollable">
+                {% block information %}
               <section class="hbox stretch">
                 <aside class="aside-lg bg-light lter b-r">
                   <section class="vbox">
@@ -236,11 +236,11 @@
                       <div class="wrapper">
                         <div class="text-center m-b m-t">
                           <a href="#" class="thumb-lg">
-                            <img src="images/a0.png" class="img-circle">
+                            <img src="{{ user.image }} class="img-circle">
                           </a>
                           <div>
-                            <div class="h3 m-t-xs m-b-xs">John.Smith</div>
-                            <small class="text-muted"><i class="fa fa-map-marker"></i> London, UK</small>
+                            <div class="h3 m-t-xs m-b-xs">{{ username }}</div>
+                            <small class="text-muted"><i class="fa fa-map-marker"></i> {{ user.address }}</small>
                           </div>                
                         </div>
                         <div class="panel wrapper">
@@ -274,7 +274,7 @@
                         </div>
                         <div>
                           <small class="text-uc text-xs text-muted">about me</small>
-                          <p>Artist</p>
+                          <p>{{ user.about_me }}</p>
                           <small class="text-uc text-xs text-muted">info</small>
                           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat.</p>
                           <div class="line"></div>
@@ -303,7 +303,7 @@
                           <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
                             <li class="list-group-item">
                               <a href="#" class="thumb-sm pull-left m-r-sm">
-                                <img src="images/a0.png" class="img-circle">
+                                <img src={{ user.image }} class="img-circle">
                               </a>
                               <a href="#" class="clear">
                                 <small class="pull-right">3 minuts ago</small>
@@ -313,7 +313,7 @@
                             </li>
                             <li class="list-group-item">
                               <a href="#" class="thumb-sm pull-left m-r-sm">
-                                <img src="images/a1.png" class="img-circle">
+                                <img src="/static/images/a1.png" class="img-circle">
                               </a>
                               <a href="#" class="clear">
                                 <small class="pull-right">1 hour ago</small>
@@ -323,7 +323,7 @@
                             </li>
                             <li class="list-group-item">
                               <a href="#" class="thumb-sm pull-left m-r-sm">
-                                <img src="images/a2.png" class="img-circle">
+                                <img src="/static/images/a2.png" class="img-circle">
                               </a>
                               <a href="#" class="clear">
                                 <small class="pull-right">2 hours ago</small>
@@ -333,7 +333,7 @@
                             </li>
                             <li class="list-group-item">
                               <a href="#" class="thumb-sm pull-left m-r-sm">
-                                <img src="images/a3.png" class="img-circle">
+                                <img src="/static/images/a3.png" class="img-circle">
                               </a>
                               <a href="#" class="clear">
                                 <small class="pull-right">1 day ago</small>
@@ -343,7 +343,7 @@
                             </li>
                             <li class="list-group-item">
                               <a href="#" class="thumb-sm pull-left m-r-sm">
-                                <img src="images/a4.png" class="img-circle">
+                                <img src="/static/images/a4.png" class="img-circle">
                               </a>
                               <a href="#" class="clear">
                                 <small class="pull-right">3 days ago</small>
@@ -353,7 +353,7 @@
                             </li>
                             <li class="list-group-item">
                               <a href="#" class="thumb-sm pull-left m-r-sm">
-                                <img src="images/a5.png" class="img-circle">
+                                <img src="/static/images/a5.png" class="img-circle">
                               </a>
                               <a href="#" class="clear">
                                 <small class="pull-right">Jun 21</small>
@@ -363,7 +363,7 @@
                             </li>
                             <li class="list-group-item">
                               <a href="#" class="thumb-sm pull-left m-r-sm">
-                                <img src="images/a6.png" class="img-circle">
+                                <img src="/static/images/a6.png" class="img-circle">
                               </a>
                               <a href="#" class="clear">
                                 <small class="pull-right">May 10</small>
@@ -373,7 +373,7 @@
                             </li>
                             <li class="list-group-item">
                               <a href="#" class="thumb-sm pull-left m-r-sm">
-                                <img src="images/a7.png" class="img-circle">
+                                <img src="/static/images/a7.png" class="img-circle">
                               </a>
                               <a href="#" class="clear">
                                 <small class="pull-right">Jan 2</small>
@@ -383,7 +383,7 @@
                             </li>
                             <li class="list-group-item" href="#email-content" data-toggle="class:show">
                               <a href="#" class="thumb-sm pull-left m-r-sm">
-                                <img src="images/a8.png" class="img-circle">
+                                <img src="/static/images/a8.png" class="img-circle">
                               </a>
                               <a href="#" class="clear">
                                 <small class="pull-right">3 minuts ago</small>
@@ -393,7 +393,7 @@
                             </li>
                             <li class="list-group-item">
                               <a href="#" class="thumb-sm pull-left m-r-sm">
-                                <img src="images/a9.png" class="img-circle">
+                                <img src="/static/images/a9.png" class="img-circle">
                               </a>
                               <a href="#" class="clear">
                                 <small class="pull-right">1 hour ago</small>
@@ -453,6 +453,7 @@
                   </section>              
                 </aside>
               </section>
+                {% endblock information %}
             </section>
           </section>
           <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
@@ -470,7 +471,7 @@
   <script src="/static/js/app.plugin.js"></script>
   <script type="text/javascript" src="/static/js/jPlayer/jquery.jplayer.min.js"></script>
   <script type="text/javascript" src="/static/js/jPlayer/add-on/jplayer.playlist.min.js"></script>
-  <script type="text/javascript" src="/static/js/jPlayer/demo.js"></script>
+  <script type="text/javascript" src="/static/js/jPlayer/demo1.js"></script>
 
 </body>
 </html>

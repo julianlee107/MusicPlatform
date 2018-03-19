@@ -34,19 +34,8 @@ class Music_sheet(models.Model):
         verbose_name_plural = verbose_name
 
 
-class Songs(models.Model):
-    name = models.CharField(max_length=100,null=False,verbose_name="歌曲名")
-    song_detail = models.TextField(verbose_name="歌曲详情")
-    song_type = models.ForeignKey(TypeDict,on_delete=models.CASCADE,verbose_name="音乐类型")
-    song_resourse = models.URLField(verbose_name="播放链接")
-
-    class Meta:
-        verbose_name = "音乐"
-        verbose_name_plural = verbose_name
-
-
 class Singer(models.Model):
-    name = models.CharField(max_length=50, verbose_name='歌手')
+    name = models.CharField(max_length=50,default='匿名歌手', null=False,verbose_name='歌手')
     singer_brief = models.TextField(verbose_name='歌手简介')
     click_nums = models.IntegerField(default=0, verbose_name='点击数')
     fav_nums = models.IntegerField(default=0, verbose_name='收藏人数')
@@ -54,4 +43,16 @@ class Singer(models.Model):
 
     class Meta:
         verbose_name = '歌手'
+        verbose_name_plural = verbose_name
+
+
+class Songs(models.Model):
+    name = models.CharField(max_length=100,null=False,verbose_name="歌曲名")
+    singer_name = models.CharField(max_length=50,default='匿名歌手', null=False,verbose_name='歌手')
+    song_detail = models.TextField(verbose_name="歌曲详情")
+    song_type = models.ForeignKey(TypeDict,on_delete=models.CASCADE,verbose_name="音乐类型")
+    song_resourse = models.URLField(verbose_name="播放链接")
+
+    class Meta:
+        verbose_name = "音乐"
         verbose_name_plural = verbose_name

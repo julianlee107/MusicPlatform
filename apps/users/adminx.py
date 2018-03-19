@@ -17,6 +17,7 @@ class BaseSetting(object):
     enable_themes = True
     use_bootswatch = True
 
+
 class UserProfileAdmin(object):
     list_display = ['id','username','gender','mobile','image']
     search_fileds = ['id','username','gender','mobile','address']

@@ -136,3 +136,11 @@ STATICFILES_DIRS = [
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
 )
+
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = '544345847@qq.com'
+EMAIL_HOST_PASSWORD = 'wfivvgbgsmuobfhh'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_FROM = 'LJL'

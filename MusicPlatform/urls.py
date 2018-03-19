@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 
-from users.views import get_index,profile,LogInView,RegisterView,logout_view
+from users.views import get_index,LogInView,RegisterView,logout_view,ActiveUserView,ProfileView,ChangeProfileView
 from django.conf.urls import url
 import xadmin
 xadmin.autodiscover()
@@ -26,8 +26,10 @@ urlpatterns = [
     # url('admin/', admin.site.urls),
     url('index/$',get_index),
     url('register/$',RegisterView.as_view(),name='注册'),
-    url('profile/$',profile),
+    url('profile/(?P<username>.*)/$',ProfileView.as_view(), name='用户页面'),
     url('login/$',LogInView.as_view(),name='登录'),
     url('logout/$',logout_view),
-    url('',get_index)
+    url('active/(?P<active_code>.*)/$',ActiveUserView.as_view(),name='用户激活'), # 配置激活账户的链接
+    url('changeprofile/$',ChangeProfileView.as_view(),name='信息修改'),
+    # url('',get_index)
 ]
