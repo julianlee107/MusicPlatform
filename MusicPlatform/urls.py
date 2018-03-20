@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 
 from users.views import get_index,LogInView,RegisterView,logout_view,ActiveUserView,ProfileView,ChangeProfileView
+from music_sheet.views import MusicSheetView,SongsView
 from django.conf.urls import url
 import xadmin
 xadmin.autodiscover()
@@ -31,5 +32,7 @@ urlpatterns = [
     url('logout/$',logout_view),
     url('active/(?P<active_code>.*)/$',ActiveUserView.as_view(),name='用户激活'), # 配置激活账户的链接
     url('changeprofile/$',ChangeProfileView.as_view(),name='信息修改'),
-    # url('',get_index)
+    url('listen/$',MusicSheetView.as_view(),name='歌单页面'),
+    url('songs/$',SongsView.as_view(),name='歌曲页面'),
+    url('',get_index)
 ]

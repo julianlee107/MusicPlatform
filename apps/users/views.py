@@ -1,5 +1,5 @@
 
-from datetime import datetime
+from datetime import datetime,time
 
 from django.shortcuts import render
 from django import forms
@@ -117,7 +117,8 @@ def get_index(request):
     # 验证是否登录
     if request.user.is_authenticated:
         username = request.COOKIES.get('cookie_username')
-        return render(request, "index.html",{'username':username})
+        user = UserProfile.objects.get(username=username)
+        return render(request, "index.html",{'username':username,'user':user})
         # return render(request,'index.html')
     else:
         return HttpResponseRedirect('/login/')
@@ -139,7 +140,7 @@ class ProfileView(View):
     def get(self,request,username):
         if request.user.is_authenticated:
             user = UserProfile.objects.get(username=username)
-            return render(request,'profile.html',{'username':username,'user':user})
+            return render(request,'profile.html', {'username': username, 'user': user})
         else:
             return HttpResponseRedirect('/login/')
 
@@ -172,7 +173,7 @@ class ChangeProfileView(View):
             # user_profile.image = old_userprofile.image
             # user_profile.about_me = old_userprofile.about_me
             # user_profile.info = old_userprofile.info
-            return render(request,'change-profile.html',{'userprofile':user_profile})
+            return render(request,'change-profile.html',{'userprofile':user_profile,'username':username})
         else:
             return HttpResponseRedirect('/login/')
     def post(self,request):
@@ -189,7 +190,7 @@ class ChangeProfileView(View):
         changed_userporfile.info = request.POST.get('info','')
         changed_userporfile.about_me = request.POST.get('about_me','')
         changed_userporfile.mobile = request.POST.get('mobile','')
-        changed_userporfile.birthday = request.POST.get('birthday','')
+        changed_userporfile.birthday = datetime.strptime(request.POST.get('birthday'),"%Y/%m/%d")
         changed_userporfile.save()
         response = HttpResponseRedirect('/index/')
         response.set_cookie("cookie_username",changed_userporfile.username,3600)
