@@ -6,7 +6,8 @@ $(document).ready(function(){
   var myPlaylist = new jPlayerPlaylist({
     jPlayer: "#jplayer_N",
     cssSelectorAncestor: "#jp_container_N"
-  }, [
+  },
+      [
     {
       title:"彩虹",
       artist:"周杰伦",
@@ -18,9 +19,14 @@ $(document).ready(function(){
           artist:"周杰伦",
           mp3:"http://music.163.com/song/media/outer/url?id=531051217.mp3"
 
+      },
+      {
+
       }
 
-  ], {
+  ],
+
+      {
     playlistOptions: {
       enableRemoveControls: true,
       autoPlay: false
@@ -34,7 +40,7 @@ $(document).ready(function(){
 
   $(document).on($.jPlayer.event.pause, myPlaylist.cssSelector.jPlayer,  function(){
     $('.musicbar').removeClass('animate');
-    $('.jp-play-me').removeClass('active');
+    $(".jp-play-me").removeClass('active');
     $('.jp-play-me').parent('li').removeClass('active');
   });
 
@@ -60,4 +66,5 @@ $(document).ready(function(){
     }
 
   })
+
   });

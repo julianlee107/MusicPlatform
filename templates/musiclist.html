@@ -1,21 +1,18 @@
 {% extends 'index.html' %}
-    {% block sidebar %}
+{% block sidebar %}
         <aside class="aside bg-light dk" id="sidebar">
             <section class="vbox animated fadeInUp">
                 <section class="scrollable hover">
                       <div class="list-group no-radius no-border no-bg m-t-n-xxs m-b-none auto">
-                        <a href="#.html" class="list-group-item">
+                        <a href="/listen/" class="list-group-item">
                           All
                         </a>
-                        <a href="#.html" class="list-group-item">
-                          blues
-                        </a>
-                        <a href="#.html" class="list-group-item">
-                          classical
-                        </a>
-                        <a href="#.html" class="list-group-item">
-                          country
-                        </a>
+
+                          {% for type in typelist %}
+                              <a href="?type={{ type.id }}" class="list-group-item">
+                             {{ type.type }}
+                            </a>
+                          {% endfor %}
                       </div>
                     </section>
                   </section>
@@ -25,8 +22,76 @@
          <section>
                   <section class="vbox">
                     <section class="scrollable padder-lg">
-            这是歌单页
+                    {% for music_sheet in music_sheets.object_list %}
+                       <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+                      <div class="item">
+                        <div class="pos-rlt">
+                          <div class="item-overlay opacity r r-2x bg-black">
+                            <div class="text-info padder m-t-sm text-sm">
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star-o text-muted"></i>
+                            </div>
+                            <div class="center text-center m-t-n">
+                              <a href="#"><i class="icon-control-play i-2x"></i></a>
+                            </div>
+                            <div class="bottom padder m-b-sm">
+                              <a href="#" class="pull-right">
+                                <i class="fa fa-heart-o"></i>
+                              </a>
+                              <a href="#">
+                                <i class="fa fa-plus-circle"></i>
+                              </a>
+                            </div>
+                          </div>
+                          <div class="top">
+                            <span class="pull-right m-t-n-xs m-r-sm text-white">
+                              <i class="fa fa-bookmark i-lg"></i>
+                            </span>
+                          </div>
+                          <a href="musiclist?id={{ music_sheet.id }}"><img src="{{ music_sheet.sheet_image.url }}" height="132" alt="" class="r r-2x img-full"></a>
+                        </div>
+                        <div class="padder-v">
+                          <a href="musiclist?id={{ music_sheet.id }}" class="text-ellipsis">{{ music_sheet.name }}</a>
+                          <span class="text-ellipsis text-xs text-muted">{{ music_sheet.fav_nums }}人收藏</span>
+                        </div>
+                      </div>
+                    </div>
+                        {% endfor %}
+
+
+
                     </section>
+
                   </section>
          </section>
+            <footer class="nav-bar-fixed-bottom">
+                <div class="pageturn col-md-offset-5">
+                            <ul class="pagelist list-unstyled list-inline">
+                                {% if music_sheets.has_previous %}
+                                    <li><a href="?{{ music_sheets.previous_page_number.querystring }}" class="prev"><span class="icon-control-rewind"></span> </a></li>
+                                    {% else %}
+                                    <span class="disabled prev icon-control-rewind"></span>
+                                {% endif %}
+                            {% for page in music_sheets.pages %}
+                                {% if page %}
+                                    {% ifequal page music_sheets.number %}
+                                        <li class="active"><a href="?{{ page.querystring }}" class="current page">{{ page }}</a></li>
+                                        {% else %}
+                                        <li><a href="?{{ page.querystring }}"></a></li>
+                                    {% endifequal %}
+                                    {% else %}
+                                    <li class="none"><a href="">...</a> </li>
+                                    {% endif %}
+                            {% endfor %}
+                            {% if songs.has_next %}
+                                <li><a href="?{{music_sheets.next_page_number.querystring }}" class="next"><span class="icon-control-forward"></span> </a> </li>
+                                {% else %}
+                                <span class="disabled next icon-control-forward"></span>
+                            {% endif %}
+                            </ul>
+                        </div>
+            </footer>
     {% endblock %}

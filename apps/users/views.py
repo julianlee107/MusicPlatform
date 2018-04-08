@@ -117,9 +117,12 @@ def get_index(request):
     # 验证是否登录
     if request.user.is_authenticated:
         username = request.COOKIES.get('cookie_username')
-        user = UserProfile.objects.get(username=username)
-        return render(request, "index.html",{'username':username,'user':user})
+        if username is not None:
+            user = UserProfile.objects.get(username=username)
+            return render(request, "index.html",{'username':username,'user':user})
         # return render(request,'index.html')
+        else:
+            return HttpResponseRedirect('/login/')
     else:
         return HttpResponseRedirect('/login/')
 
@@ -162,6 +165,7 @@ class ChangeProfileView(View):
 
             username = request.COOKIES.get('cookie_username')
             old_userprofile = UserProfile.objects.get(username=username)
+            user = old_userprofile
             user_profile = UserProfileForm(instance=old_userprofile)
 
             # user_profile.username = old_userprofile.username
@@ -173,11 +177,11 @@ class ChangeProfileView(View):
             # user_profile.image = old_userprofile.image
             # user_profile.about_me = old_userprofile.about_me
             # user_profile.info = old_userprofile.info
-            return render(request,'change-profile.html',{'userprofile':user_profile,'username':username})
+            return render(request,'change-profile.html',{'userprofile':user_profile,'username':username,'user':user})
         else:
             return HttpResponseRedirect('/login/')
     def post(self,request):
-        user_profile = UserProfileForm(request.POST)
+        user_profile = UserProfileForm(request.POST,request.FILES)
         username = request.COOKIES.get('cookie_username')
         changed_userporfile = UserProfile.objects.get(username=username)
         changed_userporfile.username = request.POST.get('username','')
@@ -186,7 +190,10 @@ class ChangeProfileView(View):
         changed_userporfile.email = request.POST.get('email','')
         changed_userporfile.gender = request.POST.get('gender','')
         changed_userporfile.address = request.POST.get('address','')
-        changed_userporfile.image = request.POST.get('image','')
+        if request.FILES.get('image',''):
+            changed_userporfile.image = request.FILES.get('image','')
+        else:
+            changed_userporfile.image = changed_userporfile.image
         changed_userporfile.info = request.POST.get('info','')
         changed_userporfile.about_me = request.POST.get('about_me','')
         changed_userporfile.mobile = request.POST.get('mobile','')

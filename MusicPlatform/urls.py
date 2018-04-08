@@ -18,6 +18,9 @@ from django.contrib import admin
 from users.views import get_index,LogInView,RegisterView,logout_view,ActiveUserView,ProfileView,ChangeProfileView
 from music_sheet.views import MusicSheetView,SongsView
 from django.conf.urls import url
+from django.conf.urls.static import static
+from django.conf import settings
+from django.views.static import serve
 import xadmin
 xadmin.autodiscover()
 
@@ -34,5 +37,10 @@ urlpatterns = [
     url('changeprofile/$',ChangeProfileView.as_view(),name='信息修改'),
     url('listen/$',MusicSheetView.as_view(),name='歌单页面'),
     url('songs/$',SongsView.as_view(),name='歌曲页面'),
+    url('media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}), # 读取数据库中图片的URL
     url('',get_index)
 ]
+
+
+
+#

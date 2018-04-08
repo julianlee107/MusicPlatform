@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'music_sheet',
     'operation',
     'xadmin',
-    'crispy_forms'
+    'crispy_forms',
+    'pure_pagination'
 ]
 AUTH_USER_MODEL = "users.UserProfile"
 MIDDLEWARE = [
@@ -130,8 +131,11 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'static')
+    os.path.join(BASE_DIR,'static'),
+    os.path.join(BASE_DIR,'media')
 ]
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
@@ -144,3 +148,12 @@ EMAIL_HOST_PASSWORD = 'wfivvgbgsmuobfhh'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 EMAIL_FROM = 'LJL'
+
+# 分页
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED':5,#中间显示多少页
+    'MARGIN_PAGES_DISPLAYED':2,#前后显示多少页
+
+    'SHOW_FIRST_PAGE_WHEN_INSTALLED':True#是否显示首页
+}
+

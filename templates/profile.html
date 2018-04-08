@@ -9,7 +9,11 @@
                       <div class="wrapper">
                         <div class="text-center m-b m-t">
                           <a href="#" class="thumb-lg">
-                            <img src="/static/images/{{ user.image }}" class="img-circle">
+                              {% if user.image %}
+                                  <img src="{{ user.image.url }}" style="height: 80px;width: 80px" class="img-circle" alt="...">
+                              {% else %}
+                                  <img src="/media/images/default.jpg" class="img-circle" alt="...">
+                              {% endif %}
                           </a>
                           <div>
                             <div class="h3 m-t-xs m-b-xs">{{ username }}</div>
@@ -76,7 +80,12 @@
                           <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
                             <li class="list-group-item">
                               <a href="#" class="thumb-sm pull-left m-r-sm">
-                                <img src="/static/images/{{ user.image }}" class="img-circle">
+{#                                  {% if user.image %}#}
+{#                                      <img src="{{ user.image.url }}" style="height: 40px;width: 40px" class="img-circle" alt="...">#}
+{#                                      {% else %}#}
+{#                                          <img src="/media/images/default.jpg" class="img-circle" alt="...">#}
+{#                                      {% endif %}#}
+                                   <img src="/media/images/default.jpg" class="img-circle" alt="...">
                               </a>
                               <a href="#" class="clear">
                                 <small class="pull-right">3 minuts ago</small>

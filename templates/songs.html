@@ -4,18 +4,15 @@
             <section class="vbox animated fadeInUp">
                 <section class="scrollable hover">
                       <div class="list-group no-radius no-border no-bg m-t-n-xxs m-b-none auto">
-                        <a href="#.html" class="list-group-item">
+                        <a href="/songs/" class="list-group-item">
                           All
                         </a>
-                        <a href="#.html" class="list-group-item">
-                          blues
-                        </a>
-                        <a href="#.html" class="list-group-item">
-                          classical
-                        </a>
-                        <a href="#.html" class="list-group-item">
-                          country
-                        </a>
+                          {% for type in typelist %}
+                              <a href="?type={{ type.id }}" class="list-group-item">
+                             {{ type.type }}
+                            </a>
+                          {% endfor %}
+
                       </div>
                     </section>
                   </section>
@@ -25,8 +22,67 @@
          <section>
                   <section class="vbox">
                     <section class="scrollable padder-lg">
-            这是歌曲页
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <td>歌名</td>
+                            <td>歌手</td>
+                            <td></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for song in songs.object_list %}
+                            <tr>
+                            <td>
+                            <a href='#' id="{{ song.id }}" name="{{ song.name }}">{{ song.name }}</a>
+                                <span class="icon-control-play jp-play-me" id="{{ song.id }}"></span>
+                            </td>
+                                <td>
+                                <a href="">{{ song.singer_name.name }}</a>
+                                </td>
+                                <td>
+                                <a href="{{ song.song_resourse }}">
+                                <span class="icon-arrow-down">
+                                </span>
+                                </a>
+                            </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
                     </section>
+
                   </section>
          </section>
+            <footer class="nav-bar-fixed-bottom">
+
+                        <div class="pageturn col-md-offset-5">
+                            <ul class="pagelist list-unstyled list-inline">
+                                {% if songs.has_previous %}
+                                    <li><a href="?{{ songs.previous_page_number.querystring }}" class="prev"><span class="icon-control-rewind"></span> </a></li>
+                                    {% else %}
+                                    <span class="disabled prev icon-control-rewind"></span>
+                                {% endif %}
+                            {% for page in songs.pages %}
+                                {% if page %}
+                                    {% ifequal page songs.number %}
+                                        <li class="active"><a href="?{{ page.querystring }}" class="current page">{{ page }}</a></li>
+                                        {% else %}
+                                        <li><a href="?{{ page.querystring }}"></a></li>
+                                    {% endifequal %}
+                                    {% else %}
+                                    <li class="none"><a href="">...</a> </li>
+                                    {% endif %}
+                            {% endfor %}
+                            {% if songs.has_next %}
+                                <li><a href="?{{ songs.next_page_number.querystring }}" class="next"><span class="icon-control-forward"></span> </a> </li>
+                                {% else %}
+                                <span class="disabled next icon-control-forward"></span>
+                            {% endif %}
+                            </ul>
+                        </div>
+            </footer>
     {% endblock %}
+{% block Externalscript %}
+{% endblock %}

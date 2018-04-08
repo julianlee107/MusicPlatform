@@ -11,23 +11,26 @@ class TypeDictAdmin(object):
 
 
 class MusicSheetAdmin(object):
-    list_display = ['name','desc','create_user','create_time',
-                    'sheet_type','fav_nums','songs_nums','sheet_tags','sheet_image']
-    search_fields = ['name','desc','create_user','create_time',
-                    'sheet_type','fav_nums','songs_nums','sheet_tags','sheet_image']
-    list_filter = ['name','desc','create_user','create_time',
-                    'sheet_type','fav_nums','songs_nums','sheet_tags','sheet_image']
+    list_display = ['id','name','desc','create_user','create_time',
+                    'sheet_type','fav_nums','sheet_tags','sheet_image']
+    search_fields = ['id','name','desc','create_user','create_time',
+                    'sheet_type','fav_nums','sheet_tags','sheet_image']
+    list_filter = ['id','name','desc','create_user','create_time',
+                    'sheet_type','fav_nums','sheet_tags','sheet_image']
+    style_fields = {'songs': 'm2m_transfer'}    #复选框
+
+
 
 class SongsAdmin(object):
-    list_display = ['name','song_detail','song_type','song_resourse']
-    search_fields = ['name','song_detail','song_type','song_resourse']
-    list_filter = ['name','song_detail','song_type','song_resourse']
+    list_display = ['id','name','singer_name','song_detail','song_type','song_resourse']
+    search_fields = ['id','name','singer_name','song_detail','song_type','song_resourse']
+    list_filter = ['id','name','singer_name','song_detail','song_type','song_resourse']
 
 
 class SingerAdmin(object):
-    list_display = ['name','fav_nums','singer_brief','add_time']
-    search_fields = ['name','fav_nums','singer_brief','add_time']
-    list_filter = ['name','fav_nums','singer_brief','add_time']
+    list_display = ['id','name','fav_nums','singer_brief','add_time']
+    search_fields = ['id','name','fav_nums','singer_brief','add_time']
+    list_filter = ['id','name','fav_nums','singer_brief','add_time']
 
 xadmin.site.register(TypeDict,TypeDictAdmin)
 xadmin.site.register(Music_sheet,MusicSheetAdmin)

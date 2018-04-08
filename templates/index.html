@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="app">
+<html class="app">
 <head>
   <meta charset="utf-8" />
   <title>JMusic</title>
@@ -12,6 +12,9 @@
   <link rel="stylesheet" href="/static/css/simple-line-icons.css" type="text/css" />
   <link rel="stylesheet" href="/static/css/font.css" type="text/css" />
   <link rel="stylesheet" href="/static/css/app.css" type="text/css" />
+  <script src="/static/js/jquery-3.3.1.min.js"></script>
+    {% block Externalscript %}
+    {% endblock %}
 {#    <!--[if lt IE 9]>#}
 {#    <script src="js/ie/html5shiv.js"></script>#}
 {#    <script src="js/ie/respond.min.js"></script>#}
@@ -91,7 +94,11 @@
             <a href="#" class="dropdown-toggle bg clear" data-toggle="dropdown">
               <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
                 {#   用户头像             #}
-                <img src="/static/images/{{ user.image }}" alt="...">
+                  {% if user.image %}
+                    <img src="{{ user.image.url }}" style="height: 40px;width: 40px" class="img-circle" alt="...">
+                  {% else %}
+                      <img src="/media/images/default.jpg" alt="...">
+                  {% endif %}
                   {#     用户名字             #}
               </span>
               {{ username }} <b class="caret"></b>
@@ -193,7 +200,11 @@
                   <div class="dropdown dropup wrapper-sm clearfix">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                       <span class="thumb-sm avatar pull-left m-l-xs">
-                        <img src="/static/images/{{ user.image }}" class="dker" alt="...">
+                          {% if user.image %}
+                    <img src="{{ user.image.url }}" style="height: 40px;width: 40px" class="img-circle" alt="...">
+                  {% else %}
+                      <img src="/media/images/default.jpg" alt="...">
+                  {% endif %}
                         <i class="on b-black"></i>
                       </span>
                       <span class="hidden-nav-xs clear">
@@ -839,6 +850,8 @@
                       </div>
                     </div>
                   </div>
+
+
                 </section>
                   {% endblock %}
 
@@ -847,6 +860,7 @@
 
          </section>
             {% endblock %}
+
             <footer class="footer bg-dark">
                   <div id="jp_container_N">
                     <div class="jp-type-playlist">
@@ -925,7 +939,7 @@
     </section>
 
   </section>
-  <script src="/static/js/jquery-3.3.1.min.js"></script>
+
   <!-- Bootstrap -->
   <script src="/static/js/bootstrap.js"></script>
   <!-- App -->
