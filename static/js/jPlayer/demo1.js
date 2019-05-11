@@ -8,21 +8,7 @@ $(document).ready(function(){
     cssSelectorAncestor: "#jp_container_N"
   },
       [
-    {
-      title:"彩虹",
-      artist:"周杰伦",
-      mp3:"http://music.163.com/song/media/outer/url?id=185809.mp3",
-      poster: "images/m0.jpg"
-    },
-      {
-        title:"等你下课（with 杨瑞代）",
-          artist:"周杰伦",
-          mp3:"http://music.163.com/song/media/outer/url?id=531051217.mp3"
 
-      },
-      {
-
-      }
 
   ],
 

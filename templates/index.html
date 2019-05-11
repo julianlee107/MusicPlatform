@@ -13,8 +13,6 @@
   <link rel="stylesheet" href="/static/css/font.css" type="text/css" />
   <link rel="stylesheet" href="/static/css/app.css" type="text/css" />
   <script src="/static/js/jquery-3.3.1.min.js"></script>
-    {% block Externalscript %}
-    {% endblock %}
 {#    <!--[if lt IE 9]>#}
 {#    <script src="js/ie/html5shiv.js"></script>#}
 {#    <script src="js/ie/respond.min.js"></script>#}
@@ -97,7 +95,7 @@
                   {% if user.image %}
                     <img src="{{ user.image.url }}" style="height: 40px;width: 40px" class="img-circle" alt="...">
                   {% else %}
-                      <img src="/media/images/default.jpg" alt="...">
+                      <img src="/media/images/default.png" alt="...">
                   {% endif %}
                   {#     用户名字             #}
               </span>
@@ -150,7 +148,7 @@
                       </a>
                     </li>
                     <li>
-                      <a href="/songs/">
+                      <a href="/songs/" target="_blank">
                         <i class="icon-music-tone-alt icon text-info"></i>
                         <span class="font-bold">Music</span>
                       </a>
@@ -164,7 +162,7 @@
 {#                    </li>#}
                         <!-- 所有歌单-->
                     <li>
-                      <a href="/listen/">
+                      <a href="/listen/" target="_blank">
                         <i class="icon-list icon  text-info-dker"></i>
                         <span class="font-bold">Listen</span>
                       </a>
@@ -203,7 +201,7 @@
                           {% if user.image %}
                     <img src="{{ user.image.url }}" style="height: 40px;width: 40px" class="img-circle" alt="...">
                   {% else %}
-                      <img src="/media/images/default.jpg" alt="...">
+                      <img src="/media/images/default.png" alt="...">
                   {% endif %}
                         <i class="on b-black"></i>
                       </span>
@@ -937,9 +935,6 @@
       </section>
 
     </section>
-
-  </section>
-
   <!-- Bootstrap -->
   <script src="/static/js/bootstrap.js"></script>
   <!-- App -->
@@ -949,6 +944,8 @@
   <script type="text/javascript" src="/static/js/jPlayer/jquery.jplayer.min.js"></script>
   <script type="text/javascript" src="/static/js/jPlayer/add-on/jplayer.playlist.min.js"></script>
   <script type="text/javascript" src="/static/js/jPlayer/demo1.js"></script>
+    {% block Externalscript %}
+    {% endblock %}
 
 </body>
 </html>

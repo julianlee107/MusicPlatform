@@ -22,6 +22,7 @@ class UserProfileAdmin(object):
     list_display = ['id','username','gender','mobile','image']
     search_fileds = ['id','username','gender','mobile','address']
     list_fileter = ['id','username','gender','mobile','address']
+    readonly_fields = ('password',)
 
 
 class EmailVerifyRecordAdmin(object):

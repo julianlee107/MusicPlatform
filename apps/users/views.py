@@ -91,9 +91,8 @@ class RegisterView(View):
             user_profile.password = make_password(password)
             user_profile.save()
 
-            send_register_email(user_profile.email,'register') #用邮箱验证激活
+            # send_register_email(user_profile.email,'register') #用邮箱验证激活
             return HttpResponseRedirect('/login/')
-            # return render(request,"login.html",{'userform':userform})
         else:
             return render(request,'register.html',{"userform":userform})
 
@@ -167,16 +166,6 @@ class ChangeProfileView(View):
             old_userprofile = UserProfile.objects.get(username=username)
             user = old_userprofile
             user_profile = UserProfileForm(instance=old_userprofile)
-
-            # user_profile.username = old_userprofile.username
-            # user_profile.last_name = old_userprofile.last_name
-            # user_profile.first_name = old_userprofile.first_name
-            # user_profile.email = old_userprofile.email
-            # user_profile.gender = old_userprofile.gender
-            # user_profile.address = old_userprofile.address
-            # user_profile.image = old_userprofile.image
-            # user_profile.about_me = old_userprofile.about_me
-            # user_profile.info = old_userprofile.info
             return render(request,'change-profile.html',{'userprofile':user_profile,'username':username,'user':user})
         else:
             return HttpResponseRedirect('/login/')

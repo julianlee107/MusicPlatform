@@ -35,7 +35,7 @@
                               <i class="fa fa-star-o text-muted"></i>
                             </div>
                             <div class="center text-center m-t-n">
-                              <a href="#"><i class="icon-control-play i-2x"></i></a>
+                              <a href="#" id="play-list-add-{{ music_sheet.id }}"><i class="icon-control-play i-2x"></i></a>
                             </div>
                             <div class="bottom padder m-b-sm">
                               <a href="#" class="pull-right">
@@ -51,10 +51,10 @@
                               <i class="fa fa-bookmark i-lg"></i>
                             </span>
                           </div>
-                          <a href="musiclist?id={{ music_sheet.id }}"><img src="{{ music_sheet.sheet_image.url }}" height="132" alt="" class="r r-2x img-full"></a>
+                          <a href="/msdetail/{{ music_sheet.id }}" target="_blank"><img src="{{ music_sheet.sheet_image.url }}" height="132" alt="" class="r r-2x img-full"></a>
                         </div>
                         <div class="padder-v">
-                          <a href="musiclist?id={{ music_sheet.id }}" class="text-ellipsis">{{ music_sheet.name }}</a>
+                          <a href="/msdetail/{{ music_sheet.id }}" class="text-ellipsis "target="_blank">{{ music_sheet.name }}</a>
                           <span class="text-ellipsis text-xs text-muted">{{ music_sheet.fav_nums }}人收藏</span>
                         </div>
                       </div>
@@ -78,15 +78,15 @@
                             {% for page in music_sheets.pages %}
                                 {% if page %}
                                     {% ifequal page music_sheets.number %}
-                                        <li class="active"><a href="?{{ page.querystring }}" class="current page">{{ page }}</a></li>
+                                        <li class="active"><a href="?{{ page.querystring }}" class="current page text-muted" >{{ page }}</a></li>
                                         {% else %}
-                                        <li><a href="?{{ page.querystring }}"></a></li>
+                                        <li><a href="?{{ page.querystring }}">{{ page }}</a></li>
                                     {% endifequal %}
                                     {% else %}
                                     <li class="none"><a href="">...</a> </li>
                                     {% endif %}
                             {% endfor %}
-                            {% if songs.has_next %}
+                            {% if music_sheets.has_next %}
                                 <li><a href="?{{music_sheets.next_page_number.querystring }}" class="next"><span class="icon-control-forward"></span> </a> </li>
                                 {% else %}
                                 <span class="disabled next icon-control-forward"></span>
@@ -95,3 +95,42 @@
                         </div>
             </footer>
     {% endblock %}
+
+{% block Externalscript %}
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var myPlaylist = new jPlayerPlaylist({
+    jPlayer: "#jplayer_N",
+    cssSelectorAncestor: "#jp_container_N"
+  },
+      [],{# 播放列表 #}
+
+      {
+    playlistOptions: {
+      enableRemoveControls: true,
+      autoPlay: true
+    },
+    swfPath: "static/js/jPlayer",
+    supplied: "webmv, ogv, m4v, oga, mp3",
+    smoothPlayBar: true,
+    keyEnabled: true,
+    audioFullScreen: false
+  });
+        {% for music_sheet in music_sheets.object_list %}
+        $("#play-list-add-{{ music_sheet.id }}").click(function(){
+            myPlaylist.setPlaylist([]);
+            {% for song in music_sheet.songs.all %}
+            myPlaylist.add({
+                title:"{{ song.name }}",
+                artist:"{{ song.singer_name }}",
+                mp3:"{{ song.song_resourse }}",
+            });
+            {% endfor %}
+            myPlaylist.play(0)
+        });
+
+    {% endfor %}
+    })
+
+    </script>
+{% endblock %}

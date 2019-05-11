@@ -1,0 +1,241 @@
+{% extends 'index.html' %}
+{% block content %}
+<section id="content">
+    <section class="vbox" id="bjax-el">
+        <section class="scrollable wrapper-lg">
+            <div class="row">
+                <div class="col-sm-8">
+                  <div class="panel wrapper-lg">
+                    <div class="row">
+                      <div class="col-sm-5">
+                        <img src="{{ music_sheet.sheet_image.url }}" class="img-full m-b">
+                      </div>
+                      <div class="col-sm-7">
+                        <h2 class="m-t-none text-black">{{ music_sheet.name }}</h2>
+                        <div class="clearfix m-b-lg">
+                          <a href="/profile/{{ creat_user.username }}/" class="thumb-sm pull-left m-r">
+                            <img src="{{ creat_user.image.url }}" class="img-circle" style="height: 40px" width="40px">
+                          </a>
+                          <div class="clear">
+                            <a href="/profile/{{ creat_user.username }}/" class="text-info">{{ creat_user.username }}</a>
+
+                          </div>
+                        </div>
+                        <div class="m-b-lg">
+                          <a href="#" id="play-all" class="btn btn-info remove-first">Play</a>
+                            {% ifequal username creat_user.username %}
+                            <a href="#" class="btn btn-default">Edit</a>{# 创建者编辑歌单 #}
+                            {% endifequal %}
+                        </div>
+                        <div>
+                          Tags:{% for tag in music_sheet.sheet_tags %} <span href="#" class="badge bg-light">{{ tag }}</span> {% endfor %}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="m-t">
+                      <p>{{ music_sheet.desc }}</p>
+                    </div>
+                    <h4 class="m-t-lg m-b">Play List</h4>
+                    <small class="block text-muted">{{ music_sheet.songs_nums }} songs/{{ music_sheet.fav_nums }} favourite/</small>
+                    <ul class="list-group list-group-lg">
+                        {% for song in music_sheet.songs.all %}
+                      <li class="list-group-item">
+                        <div class="pull-right m-l">
+                          <a href="{{ song.song_resourse }}" class="m-r-sm"><i class="icon-cloud-download"></i></a>
+                          <a href="#" class="m-r-sm"><i class="icon-plus" id="play-list-add-{{ song.id }}"></i></a>
+{#                          <a href="#"><i class="icon-close"></i></a>#}
+                        </div>
+                        <a href="#" class="jp-play-me m-r-sm pull-left">
+                          <i class="icon-control-play text" id="play-list-play-{{ song.id }}"></i>
+                          <i class="icon-control-pause text-active"></i>
+                        </a>
+                        <div class="clear text-ellipsis">
+                          <span>{{ song.name }}</span>
+                          <span class="text-muted"> --{{ song.singer_name }}</span>
+                        </div>
+                      </li>
+                        {% endfor %}
+                    </ul>
+{#                    <h4 class="m-t-lg m-b">3 Comments</h4>#}
+{#                    <section class="comment-list block">#}
+{#                      <article id="comment-id-1" class="comment-item">#}
+{#                        <a class="pull-left thumb-sm">#}
+{#                          <img src="/static/images/a0.png" class="img-circle">                        </a>#}
+{#                        <section class="comment-body m-b">#}
+{#                          <header>#}
+{#                            <a href="#"><strong>John smith</strong></a>#}
+{#                            <label class="label bg-info m-l-xs">Editor</label> #}
+{#                            <span class="text-muted text-xs block m-t-xs">#}
+{#                              24 minutes ago                            </span>                          </header>#}
+{#                          <div class="m-t-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat. Vestibulum.</div>#}
+{#                        </section>#}
+{#                      </article>#}
+{#                      <!-- .comment-reply -->#}
+{#                      <article id="comment-id-2" class="comment-item comment-reply">#}
+{#                        <a class="pull-left thumb-sm">#}
+{#                          <img src="/static/images/a1.png" class="img-circle">                        </a>#}
+{#                        <section class="comment-body m-b">#}
+{#                          <header>#}
+{#                            <a href="#"><strong>John smith</strong></a>#}
+{#                            <label class="label bg-dark m-l-xs">Admin</label>#}
+{#                            <span class="text-muted text-xs block m-t-xs">#}
+{#                              26 minutes ago                            </span>                          </header>#}
+{#                          <div class="m-t-sm">Lorem ipsum dolor sit amet, consecteter adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</div>#}
+{#                        </section>#}
+{#                      </article>#}
+{#                      <!-- / .comment-reply -->#}
+{#                      <article id="comment-id-2" class="comment-item">#}
+{#                        <a class="pull-left thumb-sm">#}
+{#                          <img src="/static/images/a2.png" class="img-circle">                        </a>#}
+{#                        <section class="comment-body m-b">#}
+{#                          <header>#}
+{#                            <a href="#"><strong>John smith</strong></a>#}
+{#                            <label class="label bg-dark m-l-xs">Admin</label>#}
+{#                            <span class="text-muted text-xs block m-t-xs">#}
+{#                              26 minutes ago                            </span>                          </header>#}
+{#                          <blockquote class="m-t">#}
+{#                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>#}
+{#                            <small>Someone famous in <cite title="Source Title">Source Title</cite></small>                          </blockquote>#}
+{#                          <div class="m-t-sm">Lorem ipsum dolor sit amet, consecteter adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</div>#}
+{#                        </section>#}
+{#                      </article>#}
+{#                    </section>#}
+{#                    <h4 class="m-t-lg m-b">Leave a comment</h4>#}
+{#                    <form>#}
+{#                      <div class="form-group pull-in clearfix">#}
+{#                        <div class="col-sm-6">#}
+{#                          <label>Your name</label>#}
+{#                          <input type="text" class="form-control" placeholder="Name">#}
+{#                        </div>#}
+{#                        <div class="col-sm-6">#}
+{#                          <label >Email</label>#}
+{#                          <input type="email" class="form-control" placeholder="Enter email">#}
+{#                        </div>#}
+{#                      </div>#}
+{#                      <div class="form-group">#}
+{#                        <label>Comment</label>#}
+{#                        <textarea class="form-control" rows="5" placeholder="Type your comment"></textarea>#}
+{#                      </div>#}
+{#                      <div class="form-group">#}
+{#                        <button type="submit" class="btn btn-success">Submit comment</button>#}
+{#                      </div>#}
+{#                    </form>#}
+                  </div>
+                </div>
+{#                <div class="col-sm-4">#}
+{#                  <div class="panel panel-default">#}
+{#                    <div class="panel-heading">Suggestions</div>#}
+{#                    <div class="panel-body">#}
+{#                      <article class="media">#}
+{#                        <a href="#" class="pull-left thumb-md m-t-xs">#}
+{#                          <img src="/static/images/m18.jpg">#}
+{#                        </a>#}
+{#                        <div class="media-body">                        #}
+{#                          <a href="#" class="font-semibold">Bootstrap 3: What you need to know</a>#}
+{#                          <div class="text-xs block m-t-xs"><a href="#">Travel</a> 2 minutes ago</div>#}
+{#                        </div>#}
+{#                      </article>#}
+{#                      <article class="media">#}
+{#                        <a href="#" class="pull-left thumb-md m-t-xs">#}
+{#                          <img src="/static/images/m19.jpg">#}
+{#                        </a>#}
+{#                        <div class="media-body">                        #}
+{#                          <a href="#" class="font-semibold">Lorem ipsum dolor sit amet it.</a>#}
+{#                          <div class="text-xs block m-t-xs"><a href="#">Design</a> 2 hours ago</div>#}
+{#                        </div>#}
+{#                      </article>#}
+{#                      <article class="media">#}
+{#                        <a href="#" class="pull-left thumb-md m-t-xs">#}
+{#                          <img src="/static/images/m20.jpg">#}
+{#                        </a>#}
+{#                        <div class="media-body">                        #}
+{#                          <a href="#" class="font-semibold">Sed diam nonummy tincidunt ut laoreet</a>#}
+{#                          <div class="text-xs block m-t-xs"><a href="#">MFC</a> 1 week ago</div>#}
+{#                        </div>#}
+{#                      </article>#}
+{#                      <article class="media">#}
+{#                        <a href="#" class="pull-left thumb-md m-t-xs">#}
+{#                          <img src="/static/images/m21.jpg">#}
+{#                        </a>#}
+{#                        <div class="media-body">                        #}
+{#                          <a href="#" class="font-semibold">Lonummy nibh euismod sed laoreet</a>#}
+{#                          <div class="text-xs block m-t-xs"><a href="#">MFC</a> 1 week ago</div>#}
+{#                        </div>#}
+{#                      </article>#}
+{#                      <article class="media">#}
+{#                        <a href="#" class="pull-left thumb-md m-t-xs">#}
+{#                          <img src="/static/images/m22.jpg">#}
+{#                        </a>#}
+{#                        <div class="media-body">                        #}
+{#                          <a href="#" class="font-semibold">Mibh euismod tincidunt ut laoreet</a>#}
+{#                          <div class="text-xs block m-t-xs"><a href="#">MFC</a> 1 week ago</div>#}
+{#                        </div>#}
+{#                      </article>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                </div>#}
+              </div>
+            </section>
+          </section>
+          <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
+        </section>
+{% endblock %}
+{% block Externalscript %}
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var myPlaylist = new jPlayerPlaylist({
+    jPlayer: "#jplayer_N",
+    cssSelectorAncestor: "#jp_container_N"
+  },
+      [
+
+  ],
+
+      {
+    playlistOptions: {
+      enableRemoveControls: true,
+      autoPlay: true
+    },
+    swfPath: "static/js/jPlayer",
+    supplied: "webmv, ogv, m4v, oga, mp3",
+    smoothPlayBar: true,
+    keyEnabled: true,
+    audioFullScreen: false
+  });
+
+        {% for song in music_sheet.songs.all %}
+        $("#play-list-play-{{ song.id }}").click(function(){
+            myPlaylist.remove(0)
+            myPlaylist.add({
+                title:"{{ song.name }}",
+                artist:"{{ song.singer_name }}",
+                mp3:"{{ song.song_resourse }}",
+            });
+            myPlaylist.play(-1)
+        });
+        $("#play-list-add-{{ song.id }}").click(function(){
+            myPlaylist.add({
+                title:"{{ song.name }}",
+                artist:"{{ song.singer_name }}",
+                mp3:"{{ song.song_resourse }}",
+            });
+        });
+    {% endfor %}
+
+        $("#play-all").click(function () {
+            myPlaylist.setPlaylist([]);{# 清空播放列表 #}
+            {% for song in music_sheet.songs.all %}
+                myPlaylist.add({
+                title:"{{ song.name }}",
+                artist:"{{ song.singer_name }}",
+                mp3:"{{ song.song_resourse }}",
+            });
+            {% endfor %}
+            myPlaylist.play(0)
+
+        })
+
+    })
+
+    </script>
+{% endblock %}

@@ -32,12 +32,15 @@ class TypeDict(models.Model):
 
 
 class Singer(models.Model):
-    id = models.IntegerField(default=0,unique=True,primary_key=True,verbose_name='歌手编号')
-    name = models.CharField(max_length=50,default='匿名歌手', null=False,verbose_name='歌手')
+    id = models.IntegerField(default=0,unique=True,
+                             primary_key=True,verbose_name='歌手编号')
+    name = models.CharField(max_length=50,default='匿名歌手',
+                            null=False,verbose_name='歌手')
     singer_brief = models.TextField(verbose_name='歌手简介')
     click_nums = models.IntegerField(default=0, verbose_name='点击数')
     fav_nums = models.IntegerField(default=0, verbose_name='收藏人数')
-    add_time = models.DateTimeField(default=datetime.now, auto_now=False,verbose_name='添加时间')
+    add_time = models.DateTimeField(default=datetime.now,
+                                    auto_now=False,verbose_name='添加时间')
 
     class Meta:
         verbose_name = '歌手'
@@ -48,13 +51,15 @@ class Singer(models.Model):
 
 
 class Songs(models.Model):
-    id = models.IntegerField(default=0,unique=True,primary_key=True,verbose_name='歌曲编号')
+    id = models.IntegerField(default=0,unique=True,primary_key=True,
+                             verbose_name='歌曲编号')
     name = models.CharField(max_length=100,null=False,verbose_name="歌曲名")
-    # singer_name = models.CharField(max_length=50,default='匿名歌手', null=False,verbose_name='歌手')
-    singer_name = models.ForeignKey(Singer,on_delete=models.CASCADE,null=True,verbose_name='歌手')
+    singer_name = models.ForeignKey(Singer,on_delete=models.CASCADE,
+                                    null=True,verbose_name='歌手')
     song_detail = models.TextField(verbose_name="歌曲详情")
-    song_type = models.ForeignKey(TypeDict,on_delete=models.CASCADE,verbose_name="音乐类型")
-    song_resourse = models.URLField(verbose_name="播放链接")
+    song_type = models.ForeignKey(TypeDict,on_delete=models.CASCADE,
+                                  verbose_name="音乐类型")
+    song_resourse = models.URLField(default="http://music.163.com/song/media/outer/url?id=",verbose_name="播放链接")
 
     class Meta:
         verbose_name = "音乐"
@@ -78,7 +83,8 @@ class Music_sheet(models.Model):
     sheet_tags = models.CharField(max_length=50,verbose_name="歌单标签")
     sheet_image = models.ImageField(upload_to="music_sheets/%Y%m",verbose_name="歌单缩略图")
 
-
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = "歌单"

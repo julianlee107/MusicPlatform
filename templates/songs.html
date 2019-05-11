@@ -34,7 +34,7 @@
                         {% for song in songs.object_list %}
                             <tr>
                             <td>
-                            <a href='#' id="{{ song.id }}" name="{{ song.name }}">{{ song.name }}</a>
+                            <a href="javascript:;" id="play-list-add-{{ song.id }}" name="{{ song.name }}">{{ song.name }}</a>
                                 <span class="icon-control-play jp-play-me" id="{{ song.id }}"></span>
                             </td>
                                 <td>
@@ -67,9 +67,9 @@
                             {% for page in songs.pages %}
                                 {% if page %}
                                     {% ifequal page songs.number %}
-                                        <li class="active"><a href="?{{ page.querystring }}" class="current page">{{ page }}</a></li>
+                                        <li class="active"><a href="?{{ page.querystring }}" class="current page text-muted">{{ page }}</a></li>
                                         {% else %}
-                                        <li><a href="?{{ page.querystring }}"></a></li>
+                                        <li><a href="?{{ page.querystring }}">{{ page }}</a></li>
                                     {% endifequal %}
                                     {% else %}
                                     <li class="none"><a href="">...</a> </li>
@@ -85,4 +85,41 @@
             </footer>
     {% endblock %}
 {% block Externalscript %}
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var myPlaylist = new jPlayerPlaylist({
+    jPlayer: "#jplayer_N",
+    cssSelectorAncestor: "#jp_container_N"
+  },
+      [
+
+  ],
+
+      {
+    playlistOptions: {
+      enableRemoveControls: true,
+      autoPlay: true
+    },
+    swfPath: "static/js/jPlayer",
+    supplied: "webmv, ogv, m4v, oga, mp3",
+    smoothPlayBar: true,
+    keyEnabled: true,
+    audioFullScreen: false
+  });
+        {% for song in songs.object_list %}
+        $("#play-list-add-{{ song.id }}").click(function(){
+            myPlaylist.remove(0);
+            myPlaylist.add({
+                title:"{{ song.name }}",
+                artist:"{{ song.singer_name }}",
+                mp3:"{{ song.song_resourse }}",
+            });
+            myPlaylist.play(-1)
+
+        });
+    {% endfor %}
+
+    })
+
+    </script>
 {% endblock %}
